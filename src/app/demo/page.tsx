@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import type { Report } from '@/types/report-schema';
 import { ChartRenderer } from '@/components/charts/ChartRenderer';
-import { KPICard } from '@/components/charts/KPICard';
+import { KPIComponent } from '@/components/report-canvas/KPIComponent';
 import { MermaidDiagram } from '@/components/charts/MermaidDiagram';
 import {
   RevenueComparisonChart,
@@ -52,7 +52,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
       position: { x: 0, y: 2, width: 3, height: 3 },
       data: {
         label: 'Total Revenue',
-        value: '$2.4M',
+        value: 2400000,
         format: 'currency',
         trend: {
           direction: 'up',
@@ -60,6 +60,8 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
           label: 'vs Q3 2024',
         },
         color: '#10b981',
+        icon: 'DollarSign',
+        tooltip: 'Total revenue for Q4 2024 including all sales channels',
       },
     },
     {
@@ -68,7 +70,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
       position: { x: 3, y: 2, width: 3, height: 3 },
       data: {
         label: 'Total Orders',
-        value: '1,847',
+        value: 1847,
         format: 'number',
         trend: {
           direction: 'up',
@@ -76,6 +78,8 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
           label: 'vs Q3 2024',
         },
         color: '#3b82f6',
+        icon: 'ShoppingCart',
+        tooltip: 'Total number of orders completed in Q4 2024',
       },
     },
     {
@@ -84,7 +88,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
       position: { x: 6, y: 2, width: 3, height: 3 },
       data: {
         label: 'Conversion Rate',
-        value: '3.2%',
+        value: 3.2,
         format: 'percentage',
         trend: {
           direction: 'up',
@@ -92,6 +96,8 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
           label: 'vs Q3 2024',
         },
         color: '#8b5cf6',
+        icon: 'Target',
+        tooltip: 'Percentage of visitors who completed a purchase',
       },
     },
     {
@@ -100,7 +106,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
       position: { x: 9, y: 2, width: 3, height: 3 },
       data: {
         label: 'Avg Order Value',
-        value: '$1,299',
+        value: 1299,
         format: 'currency',
         trend: {
           direction: 'down',
@@ -108,6 +114,8 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
           label: 'vs Q3 2024',
         },
         color: '#f59e0b',
+        icon: 'TrendingDown',
+        tooltip: 'Average value per order - slight decrease from Q3',
       },
     },
 
@@ -331,7 +339,7 @@ export default function DemoPage() {
             {report.components
               .filter((c) => c.type === 'kpi')
               .map((component) => (
-                <KPICard key={component.id} component={component as any} />
+                <KPIComponent key={component.id} component={component as any} />
               ))}
           </div>
 

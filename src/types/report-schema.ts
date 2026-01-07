@@ -206,6 +206,21 @@ export type TrendDirection = 'up' | 'down' | 'neutral';
 export const TrendDirectionSchema = z.enum(['up', 'down', 'neutral']);
 
 /**
+ * Trend information for KPI metrics.
+ */
+export interface KPITrend {
+  direction: TrendDirection;
+  value: number;
+  label: string;
+}
+
+export const KPITrendSchema = z.object({
+  direction: TrendDirectionSchema,
+  value: z.number(),
+  label: z.string(),
+});
+
+/**
  * KPI (Key Performance Indicator) component for displaying big numbers with trends.
  */
 export interface KPIComponent extends BaseComponent {
@@ -213,12 +228,11 @@ export interface KPIComponent extends BaseComponent {
   data: {
     value: number | string;
     label: string;
-    unit?: string;
-    change?: number;
-    changeLabel?: string;
-    trend?: TrendDirection;
+    format?: 'currency' | 'percentage' | 'number' | 'string';
+    trend?: KPITrend;
     color?: string;
     icon?: string;
+    tooltip?: string;
   };
 }
 
@@ -230,12 +244,11 @@ export const KPIComponentSchema = z.object({
   data: z.object({
     value: z.union([z.number(), z.string()]),
     label: z.string(),
-    unit: z.string().optional(),
-    change: z.number().optional(),
-    changeLabel: z.string().optional(),
-    trend: TrendDirectionSchema.optional(),
+    format: z.enum(['currency', 'percentage', 'number', 'string']).optional(),
+    trend: KPITrendSchema.optional(),
     color: z.string().optional(),
     icon: z.string().optional(),
+    tooltip: z.string().optional(),
   }),
 });
 
