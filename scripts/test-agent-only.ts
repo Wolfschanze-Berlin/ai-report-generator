@@ -101,7 +101,7 @@ async function testAnalysisAgent() {
     const firstComponent = result.report.components[0];
     console.log(`   Type: ${firstComponent.type}`);
     console.log(`   ID: ${firstComponent.id}`);
-    console.log(`   Position: x=${firstComponent.layout.x}, y=${firstComponent.layout.y}, w=${firstComponent.layout.w}, h=${firstComponent.layout.h}`);
+    console.log(`   Position: x=${firstComponent.position.x}, y=${firstComponent.position.y}, w=${firstComponent.position.w}, h=${firstComponent.position.h}`);
     if (firstComponent.type === 'kpi') {
       console.log(`   Value: ${firstComponent.data.value}`);
       console.log(`   Label: ${firstComponent.data.label}`);
