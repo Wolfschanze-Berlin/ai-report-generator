@@ -126,7 +126,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
       position: { x: 0, y: 5, width: 8, height: 6 },
       data: {
         chartType: 'line',
-        data: {
+        chartData: {
           labels: ['Oct', 'Nov', 'Dec'],
           datasets: [
             {
@@ -145,7 +145,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
             },
           ],
         },
-        options: {
+        chartOptions: {
           responsive: true,
           plugins: {
             title: {
@@ -175,7 +175,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
       position: { x: 8, y: 5, width: 4, height: 6 },
       data: {
         chartType: 'doughnut',
-        data: {
+        chartData: {
           labels: ['North', 'South', 'East', 'West'],
           datasets: [
             {
@@ -190,7 +190,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
             },
           ],
         },
-        options: {
+        chartOptions: {
           responsive: true,
           plugins: {
             title: {
