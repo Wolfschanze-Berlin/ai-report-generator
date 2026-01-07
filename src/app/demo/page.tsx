@@ -5,6 +5,7 @@ import type { Report } from '@/types/report-schema';
 import { ChartRenderer } from '@/components/charts/ChartRenderer';
 import { KPIComponent } from '@/components/report-canvas/KPIComponent';
 import { MarkdownComponent } from '@/components/report-canvas/MarkdownComponent';
+import { ImageComponent } from '@/components/report-canvas/ImageComponent';
 import { MermaidDiagram } from '@/components/charts/MermaidDiagram';
 import {
   RevenueComparisonChart,
@@ -252,6 +253,19 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
       },
     },
 
+    // Company Logo/Brand Image
+    {
+      id: 'company-logo',
+      type: 'image',
+      position: { x: 0, y: 16, width: 6, height: 3 },
+      data: {
+        src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop',
+        alt: 'Business analytics dashboard visualization',
+        fit: 'cover',
+        caption: 'Enterprise Analytics Platform - Powered by AI',
+      },
+    },
+
     // Key Insights
     {
       id: 'insights',
@@ -275,6 +289,19 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
 2. Implement retargeting campaigns for cart abandoners
 3. Review Cloud Storage pricing and features
 4. Focus marketing spend on high-performing East region`,
+      },
+    },
+
+    // Product Showcase Image
+    {
+      id: 'product-image',
+      type: 'image',
+      position: { x: 0, y: 19, width: 6, height: 3 },
+      data: {
+        src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop',
+        alt: 'Product analytics and metrics dashboard',
+        fit: 'contain',
+        caption: 'Real-time product performance monitoring',
       },
     },
   ],
@@ -451,19 +478,37 @@ export default function DemoPage() {
             ))}
         </div>
 
-        {/* Mermaid Diagrams and Insights Section */}
+        {/* Images, Mermaid Diagrams and Insights Section */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-            Process Flows & Key Insights
+            Visual Content & Key Insights
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Images */}
+            {report.components
+              .filter((c) => c.type === 'image')
+              .map((component) => (
+                <div key={component.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4">
+                  <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                    {component.id.split('-').map(word =>
+                      word.charAt(0).toUpperCase() + word.slice(1)
+                    ).join(' ')}
+                  </h3>
+                  <div className="h-[300px]">
+                    <ImageComponent component={component as any} />
+                  </div>
+                </div>
+              ))}
+
+            {/* Mermaid Diagrams */}
             {report.components
               .filter((c) => c.type === 'mermaid')
               .map((component) => (
                 <MermaidDiagram key={component.id} component={component as any} />
               ))}
 
+            {/* Key Insights Markdown */}
             {report.components
               .filter((c) => c.type === 'markdown' && c.id === 'insights')
               .map((component) => (
