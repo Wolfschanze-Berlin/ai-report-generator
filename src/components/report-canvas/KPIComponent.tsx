@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import * as LucideIcons from 'lucide-react';
 import type { KPIComponent as KPIComponentType } from '@/types/report-schema';
 
@@ -87,24 +86,16 @@ export function KPIComponent({ component }: KPIComponentProps) {
           {label}
         </span>
 
-        {/* Animated value with framer-motion */}
-        <motion.span
-          className="text-3xl font-bold text-gray-900 dark:text-white mb-2"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          key={value} // Re-animate when value changes
+        {/* Animated value with CSS transitions */}
+        <span
+          className="text-3xl font-bold text-gray-900 dark:text-white mb-2 transition-all duration-300 ease-in-out animate-fade-in"
+          key={value}
         >
           {formatValue(value)}
-        </motion.span>
+        </span>
 
         {trend && (
-          <motion.div
-            className="flex items-center gap-1"
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-          >
+          <div className="flex items-center gap-1 transition-all duration-300 ease-in-out animate-slide-in">
             <span className={`flex items-center gap-1 text-sm font-medium ${getTrendColor()}`}>
               {getTrendIcon()}
               {trend.value}%
@@ -112,7 +103,7 @@ export function KPIComponent({ component }: KPIComponentProps) {
             <span className="text-sm text-gray-500 dark:text-gray-400">
               {trend.label}
             </span>
-          </motion.div>
+          </div>
         )}
       </div>
     </div>
