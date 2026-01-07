@@ -179,6 +179,7 @@ export class WindmillClient {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${this.config.token}`,
+          'User-Agent': 'ai-report-generator/1.0',
         },
         body: JSON.stringify({ query }),
       });
@@ -245,6 +246,7 @@ export class WindmillClient {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${this.config.token}`,
+          'User-Agent': 'ai-report-generator/1.0',
         },
       });
 
