@@ -4,6 +4,7 @@ import { useState } from 'react';
 import type { Report } from '@/types/report-schema';
 import { ChartRenderer } from '@/components/charts/ChartRenderer';
 import { KPIComponent } from '@/components/report-canvas/KPIComponent';
+import { MarkdownComponent } from '@/components/report-canvas/MarkdownComponent';
 import { MermaidDiagram } from '@/components/charts/MermaidDiagram';
 import {
   RevenueComparisonChart,
@@ -356,6 +357,15 @@ export default function DemoPage() {
             Live Report Preview
           </h2>
 
+          {/* Markdown Header */}
+          {report.components
+            .filter((c) => c.type === 'markdown' && c.id === 'header')
+            .map((component) => (
+              <div key={component.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+                <MarkdownComponent component={component as any} />
+              </div>
+            ))}
+
           {/* KPI Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             {report.components
@@ -441,17 +451,27 @@ export default function DemoPage() {
             ))}
         </div>
 
-        {/* Mermaid Diagrams Section */}
+        {/* Mermaid Diagrams and Insights Section */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-            Process Flows & Diagrams
+            Process Flows & Key Insights
           </h2>
 
-          {report.components
-            .filter((c) => c.type === 'mermaid')
-            .map((component) => (
-              <MermaidDiagram key={component.id} component={component as any} />
-            ))}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {report.components
+              .filter((c) => c.type === 'mermaid')
+              .map((component) => (
+                <MermaidDiagram key={component.id} component={component as any} />
+              ))}
+
+            {report.components
+              .filter((c) => c.type === 'markdown' && c.id === 'insights')
+              .map((component) => (
+                <div key={component.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                  <MarkdownComponent component={component as any} />
+                </div>
+              ))}
+          </div>
         </div>
 
         {/* Shadcn/Recharts Charts Section */}
