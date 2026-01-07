@@ -65,8 +65,8 @@ export function KPIComponent({ component }: KPIComponentProps) {
 
   return (
     <div
-      className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg border-l-4 relative group"
-      style={{ borderLeftColor: color || '#3b82f6' }}
+      className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border-l-4 relative group backdrop-blur-sm"
+      style={{ borderLeftColor: color || 'oklch(0.60 0.12 220)' }}
       title={tooltip}
     >
       {/* Tooltip on hover */}
