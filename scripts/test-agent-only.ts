@@ -37,6 +37,7 @@ async function testAnalysisAgent() {
     // Step 1: Check if clarification is needed
     console.log('🤔 Step 1: Checking if clarification is needed...');
     const agent = new AnalysisAgent();
+    agent.setModel('claude-haiku-4-5-20251001'); // Use Haiku for faster testing
     const clarification = await agent.checkClarification({
       data: mockData,
       userPrompt: 'Compare sales performance by region and product',
