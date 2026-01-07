@@ -192,17 +192,32 @@ export class WindmillClient {
         );
       }
 
-      const data: TriggerJobResponse = await response.json();
+      const responseText = await response.text();
 
-      if (!data.uuid) {
+      // Windmill returns either JSON {uuid: "..."} or just the UUID string
+      // Try JSON first, fall back to plain text
+      try {
+        const data: TriggerJobResponse = JSON.parse(responseText);
+        if (!data.uuid) {
+          throw new WindmillAPIError(
+            'Invalid response from Windmill API: missing uuid',
+            response.status,
+            data
+          );
+        }
+        return data.uuid;
+      } catch (parseError) {
+        // Response might be plain UUID string
+        if (responseText && responseText.match(/^[0-9a-f-]{36}$/i)) {
+          return responseText.trim();
+        }
+
         throw new WindmillAPIError(
-          'Invalid response from Windmill API: missing uuid',
+          `Failed to parse response: ${responseText.substring(0, 200)}`,
           response.status,
-          data
+          { responseText, parseError }
         );
       }
-
-      return data.uuid;
     } catch (error) {
       if (error instanceof WindmillAPIError) {
         throw error;
