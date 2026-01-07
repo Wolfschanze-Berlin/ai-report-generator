@@ -39,11 +39,7 @@ const demoReport: Report = {
       data: {
         content: `# Q4 2024 Sales Performance Dashboard
 
-**Generated:** ${new Date().toLocaleDateString('en-US', {
-          month: 'long',
-          day: 'numeric',
-          year: 'numeric'
-        })}
+**Generated:** January 7, 2026
 
 This dashboard provides a comprehensive overview of sales performance metrics for Q4 2024, including revenue trends, regional performance, and key performance indicators.`,
       },
@@ -297,7 +293,7 @@ export default function DemoPage() {
             </div>
             <div className="flex items-center gap-3">
               <span className="text-xs text-gray-500 dark:text-gray-400">
-                Generated: {new Date(report.generatedAt).toLocaleString()}
+                Generated: {report.generatedAt}
               </span>
               <button
                 type="button"
