@@ -1,13 +1,13 @@
 'use client';
 
 import { useState, useCallback, Children, ReactElement } from 'react';
-import GridLayout, { Layout } from 'react-grid-layout';
+import GridLayout from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import type { Component } from '@/types/report-schema';
 
 interface GridCanvasProps {
   components: Component[];
-  onLayoutChange?: (layout: Layout[]) => void;
+  onLayoutChange?: (layout: any[]) => void;
   editable?: boolean;
   showGrid?: boolean;
   children?: React.ReactNode;
@@ -31,20 +31,23 @@ export function GridCanvas({
   children,
 }: GridCanvasProps) {
   // Convert component positions to react-grid-layout format
-  const initialLayout: Layout[] = components.map((component) => ({
-    i: component.id,
-    x: component.position.x,
-    y: component.position.y,
-    w: component.position.w,
-    h: component.position.h,
-    minW: component.position.minW,
-    minH: component.position.minH,
-  }));
+  const initialLayout = components.map((component) => {
+    const layoutItem: any = {
+      i: component.id,
+      x: component.position.x,
+      y: component.position.y,
+      w: component.position.w,
+      h: component.position.h,
+    };
+    if (component.position.minW) layoutItem.minW = component.position.minW;
+    if (component.position.minH) layoutItem.minH = component.position.minH;
+    return layoutItem;
+  });
 
-  const [layout, setLayout] = useState<Layout[]>(initialLayout);
+  const [layout, setLayout] = useState<any[]>(initialLayout);
 
   const handleLayoutChange = useCallback(
-    (newLayout: Layout[]) => {
+    (newLayout: any) => {
       setLayout(newLayout);
       onLayoutChange?.(newLayout);
     },
@@ -66,25 +69,22 @@ export function GridCanvas({
       }}
     >
       <GridLayout
-        className="layout"
-        layout={layout}
-        cols={12}
-        rowHeight={80}
-        width={1200}
-        margin={[16, 16]}
-        containerPadding={[0, 0]}
-        isDraggable={editable}
-        isResizable={editable}
-        onLayoutChange={handleLayoutChange}
-        draggableHandle=".drag-handle"
-        resizeHandles={['se', 'sw', 'ne', 'nw']}
-        compactType={null}
-        preventCollision={false}
-        // Touch support
-        useCSSTransforms={true}
-        // Responsive breakpoints
-        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-        cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
+        {...({
+          className: "layout",
+          layout: layout,
+          cols: 12,
+          rowHeight: 80,
+          margin: [16, 16],
+          containerPadding: [0, 0],
+          isDraggable: editable,
+          isResizable: editable,
+          onLayoutChange: handleLayoutChange,
+          draggableHandle: ".drag-handle",
+          resizeHandles: ['se', 'sw', 'ne', 'nw'],
+          compactType: null,
+          preventCollision: false,
+          useCSSTransforms: true,
+        } as any)}
       >
         {children
           ? // Render provided children

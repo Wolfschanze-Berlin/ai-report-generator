@@ -191,7 +191,7 @@ export const RestAPIQuerySchema = z.object({
   offset: z.number().optional(),
   endpoint: z.string(),
   method: z.enum(['GET', 'POST', 'PUT', 'DELETE']).optional(),
-  headers: z.record(z.string()).optional(),
+  headers: z.record(z.string(), z.string()).optional(),
   body: z.any().optional(),
 });
 
@@ -228,7 +228,7 @@ export const RestAPIConfigSchema = z.object({
   baseUrl: z.string(),
   authType: z.enum(['none', 'bearer', 'basic', 'apikey']).optional(),
   authToken: z.string().optional(),
-  defaultHeaders: z.record(z.string()).optional(),
+  defaultHeaders: z.record(z.string(), z.string()).optional(),
 });
 
 export const DataSourceConfigSchema = z.union([

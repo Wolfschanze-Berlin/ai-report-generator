@@ -134,24 +134,24 @@ export function ChartComponent({ component, theme = 'light' }: ChartComponentPro
 
     switch (chartType) {
       case 'line':
-        return <Line {...commonProps} />;
+        return <Line {...(commonProps as any)} />;
       case 'bar':
-        return <Bar {...commonProps} />;
+        return <Bar {...(commonProps as any)} />;
       case 'pie':
-        return <Pie {...commonProps} />;
+        return <Pie {...(commonProps as any)} />;
       case 'doughnut':
-        return <Doughnut {...commonProps} />;
+        return <Doughnut {...(commonProps as any)} />;
       case 'polarArea':
-        return <PolarArea {...commonProps} />;
+        return <PolarArea {...(commonProps as any)} />;
       case 'radar':
-        return <Radar {...commonProps} />;
+        return <Radar {...(commonProps as any)} />;
       case 'scatter':
-        return <Scatter {...commonProps} />;
+        return <Scatter {...(commonProps as any)} />;
       case 'bubble':
-        return <Bubble {...commonProps} />;
+        return <Bubble {...(commonProps as any)} />;
       case 'mixed':
         // Mixed charts use the base Chart component
-        return <Chart type="bar" {...commonProps} />;
+        return <Chart type="bar" {...(commonProps as any)} />;
       default:
         return (
           <div className="flex items-center justify-center h-full text-gray-500">

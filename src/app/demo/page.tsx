@@ -19,25 +19,27 @@ import {
  * Sample report demonstrating all component types.
  */
 const demoReport: Report = {
+  version: '1.0.0',
+  id: 'demo-report-1',
   title: 'Q4 2024 Sales Performance Dashboard',
   description: 'Comprehensive analysis of sales metrics, trends, and key performance indicators',
   generatedAt: '2026-01-07T20:00:00.000Z',
   metadata: {
     author: 'AI Report Generator',
-    version: '1.0.0',
     tags: ['sales', 'q4', 'performance', 'demo'],
   },
   layout: {
-    type: 'grid',
     columns: 12,
+    rowHeight: 80,
     gap: 16,
+    responsive: true,
   },
   components: [
     // Header Section
     {
       id: 'header',
       type: 'markdown',
-      position: { x: 0, y: 0, width: 12, height: 2 },
+      position: { x: 0, y: 0, w: 12, h: 2 },
       data: {
         content: `# Q4 2024 Sales Performance Dashboard
 
@@ -51,7 +53,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
     {
       id: 'kpi-revenue',
       type: 'kpi',
-      position: { x: 0, y: 2, width: 3, height: 3 },
+      position: { x: 0, y: 2, w: 3, h: 3 },
       data: {
         label: 'Total Revenue',
         value: 2400000,
@@ -69,7 +71,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
     {
       id: 'kpi-orders',
       type: 'kpi',
-      position: { x: 3, y: 2, width: 3, height: 3 },
+      position: { x: 3, y: 2, w: 3, h: 3 },
       data: {
         label: 'Total Orders',
         value: 1847,
@@ -87,7 +89,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
     {
       id: 'kpi-conversion',
       type: 'kpi',
-      position: { x: 6, y: 2, width: 3, height: 3 },
+      position: { x: 6, y: 2, w: 3, h: 3 },
       data: {
         label: 'Conversion Rate',
         value: 3.2,
@@ -105,7 +107,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
     {
       id: 'kpi-avg-order',
       type: 'kpi',
-      position: { x: 9, y: 2, width: 3, height: 3 },
+      position: { x: 9, y: 2, w: 3, h: 3 },
       data: {
         label: 'Avg Order Value',
         value: 1299,
@@ -125,7 +127,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
     {
       id: 'revenue-chart',
       type: 'chart',
-      position: { x: 0, y: 5, width: 8, height: 6 },
+      position: { x: 0, y: 5, w: 8, h: 6 },
       data: {
         chartType: 'line',
         chartData: {
@@ -174,7 +176,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
     {
       id: 'regional-chart',
       type: 'chart',
-      position: { x: 8, y: 5, width: 4, height: 6 },
+      position: { x: 8, y: 5, w: 4, h: 6 },
       data: {
         chartType: 'doughnut',
         chartData: {
@@ -211,13 +213,13 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
     {
       id: 'top-products',
       type: 'table',
-      position: { x: 0, y: 11, width: 12, height: 5 },
+      position: { x: 0, y: 11, w: 12, h: 5 },
       data: {
         columns: [
           { key: 'product', label: 'Product', type: 'string' },
           { key: 'revenue', label: 'Revenue', type: 'currency' },
           { key: 'units', label: 'Units Sold', type: 'number' },
-          { key: 'growth', label: 'Growth', type: 'percentage' },
+          { key: 'growth', label: 'Growth (%)', type: 'number' },
         ],
         rows: [
           { product: 'Enterprise Suite Pro', revenue: 450000, units: 1250, growth: 15.2 },
@@ -227,9 +229,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
           { product: 'Mobile App Suite', revenue: 240000, units: 5200, growth: 31.4 },
         ],
         sortable: true,
-        pagination: {
-          enabled: false,
-        },
+        pagination: false,
       },
     },
 
@@ -237,7 +237,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
     {
       id: 'sales-funnel',
       type: 'mermaid',
-      position: { x: 0, y: 16, width: 6, height: 6 },
+      position: { x: 0, y: 16, w: 6, h: 6 },
       data: {
         diagram: `graph TB
     A[Website Visitors<br/>58,420] --> B[Product Views<br/>24,680]
@@ -257,7 +257,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
     {
       id: 'company-logo',
       type: 'image',
-      position: { x: 0, y: 16, width: 6, height: 3 },
+      position: { x: 0, y: 16, w: 6, h: 3 },
       data: {
         src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop',
         alt: 'Business analytics dashboard visualization',
@@ -270,7 +270,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
     {
       id: 'insights',
       type: 'markdown',
-      position: { x: 6, y: 16, width: 6, height: 6 },
+      position: { x: 6, y: 16, w: 6, h: 6 },
       data: {
         content: `## Key Insights
 
@@ -296,7 +296,7 @@ This dashboard provides a comprehensive overview of sales performance metrics fo
     {
       id: 'product-image',
       type: 'image',
-      position: { x: 0, y: 19, width: 6, height: 3 },
+      position: { x: 0, y: 19, w: 6, h: 3 },
       data: {
         src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop',
         alt: 'Product analytics and metrics dashboard',
@@ -572,7 +572,7 @@ export default function DemoPage() {
                     </div>
                     <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
                       Position: ({component.position.x}, {component.position.y}) |
-                      Size: {component.position.width} × {component.position.height}
+                      Size: {component.position.w} × {component.position.h}
                     </p>
                   </div>
                   <button
@@ -606,7 +606,7 @@ export default function DemoPage() {
               <strong>Total Components:</strong> {report.components.length}
             </p>
             <p>
-              <strong>Layout:</strong> {report.layout.type} ({report.layout.columns} columns)
+              <strong>Layout:</strong> grid ({report.layout.columns} columns)
             </p>
             <p>
               <strong>Component Types:</strong>{' '}

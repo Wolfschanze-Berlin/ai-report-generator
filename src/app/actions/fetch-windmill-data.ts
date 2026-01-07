@@ -244,7 +244,7 @@ export async function fetchWindmillData(
 
     // Zod validation error
     if (error instanceof z.ZodError) {
-      const errorMessages = error.errors?.map((e) => e.message).join(', ') || 'Invalid input format';
+      const errorMessages = error.issues.map((e) => e.message).join(', ') || 'Invalid input format';
       return {
         success: false,
         status: 'error',
