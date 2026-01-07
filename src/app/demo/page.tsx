@@ -2,6 +2,13 @@
 
 import { useState } from 'react';
 import type { Report } from '@/types/report-schema';
+import { ChartRenderer } from '@/components/charts/ChartRenderer';
+import { KPICard } from '@/components/charts/KPICard';
+import {
+  RevenueComparisonChart,
+  RegionalSalesChart,
+  YearlySalesTrendChart,
+} from '@/components/charts/ShadcnCharts';
 
 /**
  * Demo Report Template
@@ -316,14 +323,121 @@ export default function DemoPage() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Visual Report Rendering */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            Live Report Preview
+          </h2>
+
+          {/* KPI Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            {report.components
+              .filter((c) => c.type === 'kpi')
+              .map((component) => (
+                <KPICard key={component.id} component={component as any} />
+              ))}
+          </div>
+
+          {/* Charts Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            {report.components
+              .filter((c) => c.type === 'chart')
+              .map((component) => (
+                <div
+                  key={component.id}
+                  className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4"
+                >
+                  <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4">
+                    {component.id.split('-').map(word =>
+                      word.charAt(0).toUpperCase() + word.slice(1)
+                    ).join(' ')}
+                  </h3>
+                  <div className="h-[400px]">
+                    <ChartRenderer component={component as any} />
+                  </div>
+                </div>
+              ))}
+          </div>
+
+          {/* Table Section */}
+          {report.components
+            .filter((c) => c.type === 'table')
+            .map((component) => (
+              <div
+                key={component.id}
+                className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8"
+              >
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                  Top Products Performance
+                </h3>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead className="bg-gray-50 dark:bg-gray-900">
+                      <tr>
+                        {(component.data as any).columns.map((col: any) => (
+                          <th
+                            key={col.key}
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                          >
+                            {col.label}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                      {(component.data as any).rows.map((row: any, idx: number) => (
+                        <tr key={idx} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                          {(component.data as any).columns.map((col: any) => (
+                            <td
+                              key={col.key}
+                              className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100"
+                            >
+                              {col.type === 'currency'
+                                ? new Intl.NumberFormat('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD',
+                                    minimumFractionDigits: 0,
+                                  }).format(row[col.key])
+                                : col.type === 'percentage'
+                                ? `${row[col.key]}%`
+                                : col.type === 'number'
+                                ? new Intl.NumberFormat('en-US').format(row[col.key])
+                                : row[col.key]}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ))}
+        </div>
+
+        {/* Shadcn/Recharts Charts Section */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            Shadcn/Recharts Visualizations
+          </h2>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <RevenueComparisonChart />
+            <RegionalSalesChart />
+          </div>
+
+          <div className="grid grid-cols-1 gap-6">
+            <YearlySalesTrendChart />
+          </div>
+        </div>
+
+        {/* Component Schema Details */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
           <div className="mb-6">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-              Report Components ({report.components.length})
+              Component Schema Details ({report.components.length} components)
             </h2>
             <p className="text-sm text-gray-600 dark:text-gray-300">
-              This demo showcases all available component types. In the final implementation,
-              these will be rendered as interactive visualizations.
+              Click any component below to view its JSON data structure.
             </p>
           </div>
 
