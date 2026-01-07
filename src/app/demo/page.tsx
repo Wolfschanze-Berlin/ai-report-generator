@@ -19,7 +19,7 @@ import {
 const demoReport: Report = {
   title: 'Q4 2024 Sales Performance Dashboard',
   description: 'Comprehensive analysis of sales metrics, trends, and key performance indicators',
-  generatedAt: new Date().toISOString(),
+  generatedAt: '2026-01-07T20:00:00.000Z',
   metadata: {
     author: 'AI Report Generator',
     version: '1.0.0',
