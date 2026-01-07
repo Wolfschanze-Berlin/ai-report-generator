@@ -7,7 +7,7 @@
  */
 
 import Anthropic from '@anthropic-ai/sdk';
-import { reportSchema, type Report } from '@/types/report-schema';
+import { ReportSchema, type Report } from '@/types/report-schema';
 import {
   ANALYSIS_AGENT_PROMPT,
   ANALYZE_DATA_PATTERNS_TOOL,
@@ -208,7 +208,7 @@ export class AnalysisAgent {
       // Prepare analysis prompt
       const prompt = this.buildAnalysisPrompt(input);
 
-      // Call Claude API
+      // Call Claude API (tools are reference-only, not for actual tool use)
       const response = await this.anthropicClient.messages.create({
         model: this.model,
         max_tokens: this.maxTokens,
@@ -219,11 +219,6 @@ export class AnalysisAgent {
             content: prompt,
           },
         ],
-        tools: [
-          ANALYZE_DATA_PATTERNS_TOOL,
-          SUGGEST_CHART_TYPE_TOOL,
-          VALIDATE_REPORT_SCHEMA_TOOL,
-        ] as any,
       });
 
       // Extract text content
@@ -342,7 +337,7 @@ Generate the Report JSON now:`;
       }
 
       // Validate with Zod schema
-      const validated = reportSchema.parse(reportJSON);
+      const validated = ReportSchema.parse(reportJSON);
 
       return validated;
     } catch (error) {

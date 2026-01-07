@@ -13,21 +13,21 @@
 
 /**
  * Default model for all agents.
- * Use Sonnet 3.5 for balance of speed and quality.
+ * Use Sonnet 4.5 for balance of speed and quality.
  */
-export const DEFAULT_MODEL = 'claude-3-5-sonnet-20241022';
+export const DEFAULT_MODEL = 'claude-sonnet-4-5-20250929';
 
 /**
  * High-quality model for complex analysis.
- * Use Opus for maximum quality when needed.
+ * Use Opus 4.5 for maximum quality when needed.
  */
-export const HIGH_QUALITY_MODEL = 'claude-opus-4-20250514';
+export const HIGH_QUALITY_MODEL = 'claude-opus-4-5-20251101';
 
 /**
  * Fast model for simple tasks.
- * Use Haiku for quick operations.
+ * Use Haiku 4.5 for quick operations.
  */
-export const FAST_MODEL = 'claude-3-haiku-20240307';
+export const FAST_MODEL = 'claude-haiku-4-5-20251001';
 
 // ============================================================================
 // Agent System Prompts
