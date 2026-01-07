@@ -4,6 +4,7 @@ import { useState } from 'react';
 import type { Report } from '@/types/report-schema';
 import { ChartRenderer } from '@/components/charts/ChartRenderer';
 import { KPICard } from '@/components/charts/KPICard';
+import { MermaidDiagram } from '@/components/charts/MermaidDiagram';
 import {
   RevenueComparisonChart,
   RegionalSalesChart,
@@ -411,6 +412,19 @@ export default function DemoPage() {
                   </table>
                 </div>
               </div>
+            ))}
+        </div>
+
+        {/* Mermaid Diagrams Section */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            Process Flows & Diagrams
+          </h2>
+
+          {report.components
+            .filter((c) => c.type === 'mermaid')
+            .map((component) => (
+              <MermaidDiagram key={component.id} component={component as any} />
             ))}
         </div>
 
